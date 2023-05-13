@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "348231623434",
+    "project_id": "spin-links-bbc42",
+    "storage_bucket": "spin-links-bbc42.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:348231623434:android:6c8cde48d8b2fa2e56d0f3",
+        "android_client_info": {
+          "package_name": "com.example.spin_links"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "348231623434-5ngnvm6s6c9pb2ekq408aufpj4qo1eok.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYiqj0XGMW9m96zDbs_mvJLRCcUpap234"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "348231623434-5ngnvm6s6c9pb2ekq408aufpj4qo1eok.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:348231623434:android:f9044050acf21c6656d0f3",
+        "android_client_info": {
+          "package_name": "com.spinlinks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "348231623434-5ngnvm6s6c9pb2ekq408aufpj4qo1eok.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYiqj0XGMW9m96zDbs_mvJLRCcUpap234"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "348231623434-5ngnvm6s6c9pb2ekq408aufpj4qo1eok.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
