@@ -41,6 +41,7 @@ class CustomListOfCoins extends StatelessWidget {
                 color: Colors.yellow[700]!,
                 icon: Icons.attach_money_outlined,
                 link: lin[lenght],
+                isCoinLink: true,
               );
             },
           );

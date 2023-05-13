@@ -43,6 +43,7 @@ class CustomListOfSpins extends StatelessWidget {
                 color: Colors.blue,
                 icon: Icons.offline_bolt_rounded,
                 link: lin[lenght],
+                isCoinLink: false,
               );
             },
           );

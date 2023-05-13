@@ -8,11 +8,13 @@ class CustomLinkWidget extends StatefulWidget {
     required this.color,
     required this.icon,
     required this.link,
+    required this.isCoinLink,
   }) : super(key: key);
 
   final Color color;
   final IconData icon;
   final Map link;
+  final bool isCoinLink;
 
   @override
   State<CustomLinkWidget> createState() => _CustomLinkWidgetState();
@@ -32,65 +34,95 @@ class _CustomLinkWidgetState extends State<CustomLinkWidget> {
     }
   }
 
-  _showAlertDialog() async {
-    return showGeneralDialog(
-        context: context,
-        barrierDismissible: true,
-        barrierLabel:
-            MaterialLocalizations.of(context).modalBarrierDismissLabel,
-        barrierColor: Colors.black45,
-        transitionDuration: const Duration(milliseconds: 200),
-        pageBuilder: (BuildContext buildContext, Animation animation,
-            Animation secondaryAnimation) {
-          return Center(
-            child: Container(
-              width: MediaQuery.of(context).size.width - 40,
-              height: MediaQuery.of(context).size.height / 3,
-              padding: EdgeInsets.all(20),
-              color: Colors.white,
-              child: Column(
-                children: [
-                  const Text(
-                    'Are you sure to open?',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const Text(
-                    'This link will be opened. Do you want to leave this application then open it now?',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const Spacer(),
-                  Row(
-                    children: [
-                      const Spacer(),
-                      TextButton(
+  Future<void> _showAlertDialog() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          // <-- SEE HERE
+          title: const Text('Are you sure to open?'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                const Text(
+                    'This link will be opened. Do you want to leave this application then open it now?'),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.grey[300]),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
                         child: const Text(
                           "No",
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
                         ),
                       ),
-                      TextButton(
+                    ),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: widget.isCoinLink == true
+                              ? Colors.yellow
+                              : Colors.blue,
+                        ),
                         onPressed: () {
+                          _launchURL();
                           Navigator.of(context).pop();
                         },
                         child: const Text(
                           "Yes",
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
                         ),
                       ),
-                    ],
-                  )
-                ],
-              ),
+                    ),
+                  ],
+                )
+              ],
             ),
-          );
-        });
+          ),
+          // actions: <Widget>[
+          //   TextButton(
+          //     child: const Text(
+          //       'No',
+          //       style: TextStyle(color: Colors.black),
+          //     ),
+          //     onPressed: () {
+          //       Navigator.of(context).pop();
+          //     },
+          //   ),
+          //   ElevatedButton(
+          //     style: ElevatedButton.styleFrom(
+          //       backgroundColor:
+          //           widget.isCoinLink == true ? Colors.yellow : Colors.blue,
+          //     ),
+          //     onPressed: () {
+          //       _launchURL();
+          //       Navigator.of(context).pop();
+          //     },
+          //     child: const Text(
+          //       "Yes",
+          //       style: TextStyle(color: Colors.black),
+          //     ),
+          //   ),
+          // ],
+        );
+      },
+    );
   }
 
   String? linkss;
