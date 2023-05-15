@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'custom_link_widget.dart';
 
 class CustomListOfSpins extends StatelessWidget {
@@ -11,6 +12,7 @@ class CustomListOfSpins extends StatelessWidget {
 
   final Color color;
   final IconData icon;
+
   @override
   Widget build(BuildContext context) {
     CollectionReference links = FirebaseFirestore.instance.collection('links');
@@ -35,21 +37,29 @@ class CustomListOfSpins extends StatelessWidget {
 
           int lenght = lin.length;
 
-          return ListView.builder(
-            itemCount: lin.length,
-            itemBuilder: (context, index) {
-              lenght--;
-              return CustomLinkWidget(
-                color: Colors.blue,
-                icon: Icons.offline_bolt_rounded,
-                link: lin[lenght],
-                isCoinLink: false,
-              );
-            },
+          return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: lin.length,
+              itemBuilder: (context, index) {
+                lenght--;
+                return CustomLinkWidget(
+                  color: Colors.blue,
+                  icon: Icons.offline_bolt_rounded,
+                  link: lin[lenght],
+                  isCoinLink: false,
+                );
+              },
+            ),
           );
         }
 
-        return const Center(child: Text("loading"));
+        return Center(
+          child: LoadingAnimationWidget.discreteCircle(
+              color: Colors.blue, size: 40),
+        );
       },
     );
   }

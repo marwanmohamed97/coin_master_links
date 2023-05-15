@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'custom_link_widget.dart';
 
 class CustomListOfCoins extends StatelessWidget {
@@ -33,21 +34,29 @@ class CustomListOfCoins extends StatelessWidget {
 
           List lin = data['coin_links'];
           int lenght = lin.length;
-          return ListView.builder(
-            itemCount: lin.length,
-            itemBuilder: (context, index) {
-              lenght--;
-              return CustomLinkWidget(
-                color: Colors.yellow[700]!,
-                icon: Icons.attach_money_outlined,
-                link: lin[lenght],
-                isCoinLink: true,
-              );
-            },
+          return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: lin.length,
+              itemBuilder: (context, index) {
+                lenght--;
+                return CustomLinkWidget(
+                  color: Colors.yellow[700]!,
+                  icon: Icons.attach_money_outlined,
+                  link: lin[lenght],
+                  isCoinLink: true,
+                );
+              },
+            ),
           );
         }
 
-        return const Center(child: Text("loading"));
+        return Center(
+          child: LoadingAnimationWidget.discreteCircle(
+              color: Colors.yellow[700]!, size: 40),
+        );
       },
     );
   }

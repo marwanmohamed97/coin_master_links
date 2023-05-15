@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../../../constats.dart';
 
 class CustomLinkWidget extends StatefulWidget {
   const CustomLinkWidget({
@@ -21,14 +24,13 @@ class CustomLinkWidget extends StatefulWidget {
 }
 
 class _CustomLinkWidgetState extends State<CustomLinkWidget> {
-  _launchURL() async {
+  void _launchURL() async {
     String reward = widget.link['link'];
     String url =
         'coinmaster://promotions?af_deeplink=true&campaign=${reward.substring(70)}';
     final uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
-      print(uri);
     } else {
       throw 'Could not launch $uri';
     }
@@ -39,7 +41,6 @@ class _CustomLinkWidgetState extends State<CustomLinkWidget> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          // <-- SEE HERE
           title: const Text('Are you sure to open?'),
           content: SingleChildScrollView(
             child: ListBody(
@@ -58,7 +59,8 @@ class _CustomLinkWidgetState extends State<CustomLinkWidget> {
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.grey[300]),
                         onPressed: () {
-                          Navigator.of(context).pop();
+                          getclickedLinks();
+                          // Navigator.of(context).pop();
                         },
                         child: const Text(
                           "No",
@@ -79,7 +81,9 @@ class _CustomLinkWidgetState extends State<CustomLinkWidget> {
                               : Colors.blue,
                         ),
                         onPressed: () {
-                          _launchURL();
+                          // _launchURL();
+                          setClickedLinks(widget.link['link']);
+                          setState(() {});
                           Navigator.of(context).pop();
                         },
                         child: const Text(
@@ -95,37 +99,27 @@ class _CustomLinkWidgetState extends State<CustomLinkWidget> {
               ],
             ),
           ),
-          // actions: <Widget>[
-          //   TextButton(
-          //     child: const Text(
-          //       'No',
-          //       style: TextStyle(color: Colors.black),
-          //     ),
-          //     onPressed: () {
-          //       Navigator.of(context).pop();
-          //     },
-          //   ),
-          //   ElevatedButton(
-          //     style: ElevatedButton.styleFrom(
-          //       backgroundColor:
-          //           widget.isCoinLink == true ? Colors.yellow : Colors.blue,
-          //     ),
-          //     onPressed: () {
-          //       _launchURL();
-          //       Navigator.of(context).pop();
-          //     },
-          //     child: const Text(
-          //       "Yes",
-          //       style: TextStyle(color: Colors.black),
-          //     ),
-          //   ),
-          // ],
         );
       },
     );
   }
 
-  String? linkss;
+  void setClickedLinks(String url) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    if (clickedLinks.contains(url) == false) {
+      clickedLinks.add(url);
+      prefs.setStringList('clickedLinks', clickedLinks);
+    }
+  }
+
+  Future<List<String>?> getclickedLinks() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? links = prefs.getStringList('clickedLinks');
+    print(links);
+    return links;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -136,13 +130,15 @@ class _CustomLinkWidgetState extends State<CustomLinkWidget> {
         },
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.grey[200],
+            color: clickedLinks.contains(widget.link['link'])
+                ? Colors.grey[200]
+                : Colors.grey[400],
             borderRadius: BorderRadius.circular(
               16,
             ),
           ),
           width: MediaQuery.of(context).size.width,
-          height: 80,
+          height: 90,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
@@ -173,9 +169,12 @@ class _CustomLinkWidgetState extends State<CustomLinkWidget> {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
+                        const SizedBox(
+                          height: 4,
+                        ),
                         Text(
                           widget.link['date'],
-                          style: const TextStyle(color: Colors.grey),
+                          style: const TextStyle(color: Colors.black),
                           overflow: TextOverflow.clip,
                         ),
                       ],

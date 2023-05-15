@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:spin_links/features/home/presentation/views/widgets/privacy_policy_view.dart';
 import '../../../../../core/utils/app_router.dart';
 import 'custom_featured_widget.dart';
@@ -23,7 +24,7 @@ class HomeviewBody extends StatelessWidget {
                 children: [
                   CustomFeaturedWidget(
                     onTap: () {
-                      GoRouter.of(context).push(AppRouter.CoinLinks);
+                      GoRouter.of(context).push(AppRouter.coinLinks);
                     },
                     iconSize: 46,
                     color: Colors.yellow[800]!,
@@ -34,7 +35,7 @@ class HomeviewBody extends StatelessWidget {
                   ),
                   CustomFeaturedWidget(
                     onTap: () {
-                      GoRouter.of(context).push(AppRouter.SpinLinks);
+                      GoRouter.of(context).push(AppRouter.spinLinks);
                     },
                     color: Colors.blue,
                     height: 150,
@@ -52,7 +53,9 @@ class HomeviewBody extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustomFeaturedWidget(
-                    onTap: () {},
+                    onTap: () {
+                      Share.share('check out my website https://example.com');
+                    },
                     color: Colors.green,
                     height: 100,
                     icon: Icons.share,
