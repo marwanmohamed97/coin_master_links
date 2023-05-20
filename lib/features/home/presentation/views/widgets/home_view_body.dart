@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:spin_links/features/home/presentation/views/widgets/privacy_policy_view.dart';
 import '../../../../../core/utils/app_router.dart';
@@ -54,7 +55,7 @@ class HomeviewBody extends StatelessWidget {
                 children: [
                   CustomFeaturedWidget(
                     onTap: () {
-                      Share.share('check out my website https://example.com');
+                      Share.share('com.example.spin_links');
                     },
                     color: Colors.green,
                     height: 100,
@@ -64,7 +65,13 @@ class HomeviewBody extends StatelessWidget {
                     iconSize: 36,
                   ),
                   CustomFeaturedWidget(
-                    onTap: () {},
+                    onTap: () async {
+                      final InAppReview inAppReview = InAppReview.instance;
+
+                      if (await inAppReview.isAvailable()) {
+                        inAppReview.requestReview();
+                      }
+                    },
                     color: Colors.green,
                     height: 100,
                     icon: Icons.stars,

@@ -58,7 +58,7 @@ class CustomListOfSpins extends StatelessWidget {
 
         return Center(
           child: LoadingAnimationWidget.discreteCircle(
-              color: Colors.blue, size: 40),
+              color: Colors.yellow[700]!, size: 40),
         );
       },
     );

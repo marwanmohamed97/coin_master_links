@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -126,7 +127,19 @@ class _CustomLinkWidgetState extends State<CustomLinkWidget> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: GestureDetector(
         onTap: () {
-          _showAlertDialog();
+          // _showAlertDialog();
+          late FirebaseMessaging messaging;
+          messaging = FirebaseMessaging.instance;
+          messaging.getToken().then((value) {
+            print(value);
+          });
+          FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+            print("message recieved");
+            print(event.notification!.body);
+          });
+          FirebaseMessaging.onMessageOpenedApp.listen((message) {
+            print('Message clicked!');
+          });
         },
         child: Container(
           decoration: BoxDecoration(
