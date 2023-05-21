@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'core/utils/app_router.dart';
 import 'firebase_options.dart';
 
@@ -50,6 +51,9 @@ class SpinLinks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      theme: ThemeData(
+        textTheme: GoogleFonts.openSansTextTheme(),
+      ),
       debugShowCheckedModeBanner: false,
       // theme: ThemeData.dark(),
       routerConfig: AppRouter.router,
