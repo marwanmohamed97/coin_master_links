@@ -128,18 +128,18 @@ class _CustomLinkWidgetState extends State<CustomLinkWidget> {
       child: GestureDetector(
         onTap: () {
           // _showAlertDialog();
-          late FirebaseMessaging messaging;
-          messaging = FirebaseMessaging.instance;
-          messaging.getToken().then((value) {
-            print(value);
-          });
-          FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-            print("message recieved");
-            print(event.notification!.body);
-          });
-          FirebaseMessaging.onMessageOpenedApp.listen((message) {
-            print('Message clicked!');
-          });
+          // late FirebaseMessaging messaging;
+          // messaging = FirebaseMessaging.instance;
+          // messaging.getToken().then((value) {
+          //   print(value);
+          // });
+          // FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+          //   print("message recieved");
+          //   print(event.notification!.body);
+          // });
+          // FirebaseMessaging.onMessageOpenedApp.listen((message) {
+          //   print('Message clicked!');
+          // });
         },
         child: Container(
           decoration: BoxDecoration(
