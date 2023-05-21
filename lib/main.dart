@@ -52,7 +52,7 @@ class SpinLinks extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       theme: ThemeData(
-        textTheme: GoogleFonts.openSansTextTheme(),
+        textTheme: GoogleFonts.poppinsTextTheme(),
       ),
       debugShowCheckedModeBanner: false,
       // theme: ThemeData.dark(),

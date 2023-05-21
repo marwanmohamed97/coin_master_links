@@ -60,7 +60,7 @@ class _CustomLinkWidgetState extends State<CustomLinkWidget> {
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.grey[300]),
                         onPressed: () {
-                          getclickedLinks();
+                          // getclickedLinks();
                           // Navigator.of(context).pop();
                         },
                         child: const Text(
@@ -82,8 +82,10 @@ class _CustomLinkWidgetState extends State<CustomLinkWidget> {
                               : Colors.blue,
                         ),
                         onPressed: () {
-                          // _launchURL();
-                          setClickedLinks(widget.link['link']);
+                          _launchURL();
+                          setClickedLinks(
+                            widget.link['link'],
+                          );
                           setState(() {});
                           Navigator.of(context).pop();
                         },
@@ -105,20 +107,32 @@ class _CustomLinkWidgetState extends State<CustomLinkWidget> {
     );
   }
 
-  void setClickedLinks(String url) async {
+  void setClickedLinks(
+    String url,
+  ) async {
     final prefs = await SharedPreferences.getInstance();
-
     if (clickedLinks.contains(url) == false) {
       clickedLinks.add(url);
       prefs.setStringList('clickedLinks', clickedLinks);
     }
   }
 
-  Future<List<String>?> getclickedLinks() async {
+  // Future<List<String>?> getclickedLinks() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   List<String>? links = prefs.getStringList('clickedLinks');
+
+  //   return links;
+  // }
+  void initGetLinks() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String>? links = prefs.getStringList('clickedLinks');
-    print(links);
-    return links;
+    clickedLinks = prefs.getStringList('clickedLinks')!;
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    initGetLinks();
+    super.initState();
   }
 
   @override
@@ -127,19 +141,7 @@ class _CustomLinkWidgetState extends State<CustomLinkWidget> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: GestureDetector(
         onTap: () {
-          // _showAlertDialog();
-          // late FirebaseMessaging messaging;
-          // messaging = FirebaseMessaging.instance;
-          // messaging.getToken().then((value) {
-          //   print(value);
-          // });
-          // FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-          //   print("message recieved");
-          //   print(event.notification!.body);
-          // });
-          // FirebaseMessaging.onMessageOpenedApp.listen((message) {
-          //   print('Message clicked!');
-          // });
+          _showAlertDialog();
         },
         child: Container(
           decoration: BoxDecoration(
