@@ -1,5 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:spin_links/features/home/presentation/views/widgets/privacy_policy_content.dart';
+import 'package:spin_links/features/home/presentation/views/widgets/privacy_policy_view.dart';
 import '../../features/home/presentation/views/home_view.dart';
 import '../../features/home/presentation/views/widgets/coin_links_view.dart';
 import '../../features/home/presentation/views/widgets/spin_links_view.dart';
@@ -7,6 +9,7 @@ import '../../features/home/presentation/views/widgets/spin_links_view.dart';
 abstract class AppRouter {
   static const coinLinks = '/CoinLinks';
   static const spinLinks = '/SpinLinks';
+  static const privacyPolicy = '/privacyPolicy';
 
   static final router = GoRouter(
     routes: [
@@ -21,6 +24,10 @@ abstract class AppRouter {
       GoRoute(
         path: spinLinks,
         builder: (context, state) => const SpinLinksView(),
+      ),
+      GoRoute(
+        path: privacyPolicy,
+        builder: (context, state) => const PrivacyPolicyContent(),
       ),
     ],
   );

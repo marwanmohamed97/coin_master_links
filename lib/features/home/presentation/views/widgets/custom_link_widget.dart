@@ -117,12 +117,6 @@ class _CustomLinkWidgetState extends State<CustomLinkWidget> {
     }
   }
 
-  // Future<List<String>?> getclickedLinks() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   List<String>? links = prefs.getStringList('clickedLinks');
-
-  //   return links;
-  // }
   void initGetLinks() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     clickedLinks = prefs.getStringList('clickedLinks')!;
@@ -146,8 +140,8 @@ class _CustomLinkWidgetState extends State<CustomLinkWidget> {
         child: Container(
           decoration: BoxDecoration(
             color: clickedLinks.contains(widget.link['link'])
-                ? Colors.grey[200]
-                : Colors.grey[400],
+                ? Colors.white
+                : Colors.grey[300],
             borderRadius: BorderRadius.circular(
               16,
             ),
@@ -196,10 +190,10 @@ class _CustomLinkWidgetState extends State<CustomLinkWidget> {
                     ),
                   ],
                 ),
-                const Icon(
+                Icon(
                   Icons.arrow_forward_ios_rounded,
                   size: 30,
-                  color: Colors.blue,
+                  color: widget.color,
                 )
               ],
             ),

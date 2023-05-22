@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:in_app_review/in_app_review.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:spin_links/features/home/presentation/views/widgets/privacy_policy_view.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../../../core/utils/app_router.dart';
 import 'custom_featured_widget.dart';
 
@@ -55,7 +55,8 @@ class HomeviewBody extends StatelessWidget {
                 children: [
                   CustomFeaturedWidget(
                     onTap: () {
-                      Share.share('com.example.spin_links');
+                      Share.share(
+                          'https://play.google.com/store/apps/details?id=com.example.spin_links');
                     },
                     color: Colors.green,
                     height: 100,
@@ -66,10 +67,12 @@ class HomeviewBody extends StatelessWidget {
                   ),
                   CustomFeaturedWidget(
                     onTap: () async {
-                      final InAppReview inAppReview = InAppReview.instance;
-
-                      if (await inAppReview.isAvailable()) {
-                        inAppReview.requestReview();
+                      String url = 'market://details?id=com.example.spin_links';
+                      final uri = Uri.parse(url);
+                      if (await canLaunchUrl(uri)) {
+                        await launchUrl(uri);
+                      } else {
+                        throw 'Could not launch $uri';
                       }
                     },
                     color: Colors.green,
@@ -84,7 +87,11 @@ class HomeviewBody extends StatelessWidget {
               const SizedBox(
                 height: 30,
               ),
-              const PrivacyPolicyView(),
+              GestureDetector(
+                  onTap: () {
+                    GoRouter.of(context).push(AppRouter.privacyPolicy);
+                  },
+                  child: const PrivacyPolicyView()),
             ],
           ),
         ),
