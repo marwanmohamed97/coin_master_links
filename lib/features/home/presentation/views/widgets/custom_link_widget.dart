@@ -1,6 +1,4 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -126,6 +124,7 @@ class _CustomLinkWidgetState extends State<CustomLinkWidget> {
   @override
   void initState() {
     initGetLinks();
+
     super.initState();
   }
 
