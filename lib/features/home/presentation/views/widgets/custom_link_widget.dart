@@ -105,9 +105,7 @@ class _CustomLinkWidgetState extends State<CustomLinkWidget> {
     );
   }
 
-  void setClickedLinks(
-    String url,
-  ) async {
+  void setClickedLinks(String url) async {
     final prefs = await SharedPreferences.getInstance();
     if (clickedLinks.contains(url) == false) {
       clickedLinks.add(url);

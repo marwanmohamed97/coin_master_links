@@ -1,9 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import '../../../data/ad_helper.dart';
 import 'custom_link_widget.dart';
 
-class CustomListOfSpins extends StatelessWidget {
+const int maxFailedLoadAttempts = 3;
+
+class CustomListOfSpins extends StatefulWidget {
   const CustomListOfSpins({
     Key? key,
     required this.color,
@@ -12,6 +16,62 @@ class CustomListOfSpins extends StatelessWidget {
 
   final Color color;
   final IconData icon;
+
+  @override
+  State<CustomListOfSpins> createState() => _CustomListOfSpinsState();
+}
+
+class _CustomListOfSpinsState extends State<CustomListOfSpins> {
+  InterstitialAd? _interstitialAd;
+  int _interstitialLoadAttempts = 0;
+
+  void _createInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: AdHelper.interstitialAdUnitId,
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (InterstitialAd ad) {
+          _interstitialAd = ad;
+          _interstitialLoadAttempts = 0;
+        },
+        onAdFailedToLoad: (LoadAdError error) {
+          _interstitialLoadAttempts += 1;
+          _interstitialAd = null;
+          if (_interstitialLoadAttempts <= maxFailedLoadAttempts) {
+            _createInterstitialAd();
+          }
+        },
+      ),
+    );
+  }
+
+  void _showInterstitialAd() {
+    if (_interstitialAd != null) {
+      _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (InterstitialAd ad) {
+          ad.dispose();
+          _createInterstitialAd();
+        },
+        onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
+          ad.dispose();
+          _createInterstitialAd();
+        },
+      );
+      _interstitialAd!.show();
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _createInterstitialAd();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _interstitialAd?.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,21 +97,28 @@ class CustomListOfSpins extends StatelessWidget {
 
           int lenght = lin.length;
 
-          return SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: lin.length,
-              itemBuilder: (context, index) {
-                lenght--;
-                return CustomLinkWidget(
-                  color: Colors.blue,
-                  icon: Icons.offline_bolt_rounded,
-                  link: lin[lenght],
-                  isCoinLink: false,
-                );
-              },
+          return WillPopScope(
+            onWillPop: () {
+              _showInterstitialAd();
+              Navigator.pop(context);
+              return Future.value(false);
+            },
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: lin.length,
+                itemBuilder: (context, index) {
+                  lenght--;
+                  return CustomLinkWidget(
+                    color: Colors.blue,
+                    icon: Icons.offline_bolt_rounded,
+                    link: lin[lenght],
+                    isCoinLink: false,
+                  );
+                },
+              ),
             ),
           );
         }
