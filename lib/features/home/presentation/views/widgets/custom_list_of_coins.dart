@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:spin_links/features/home/data/ad_helper.dart';
+import 'ad_for_listView.dart';
 import 'custom_link_widget.dart';
 
 const int maxFailedLoadAttempts = 3;
@@ -103,7 +104,14 @@ class _CustomListOfCoinsState extends State<CustomListOfCoins> {
             },
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
-              child: ListView.builder(
+              child: ListView.separated(
+                separatorBuilder: (context, index) {
+                  if ((index + 1) % 4 == 0) {
+                    return const BannerAdmob();
+                  } else {
+                    return Container();
+                  }
+                },
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: lin.length,

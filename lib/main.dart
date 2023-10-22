@@ -16,7 +16,7 @@ FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 initInfo() {
   var androinInitialize =
-      const AndroidInitializationSettings('@mipmap/ic_launcher');
+      const AndroidInitializationSettings('@drawable/ic_laucher');
   var intializationsSettings =
       InitializationSettings(android: androinInitialize);
   flutterLocalNotificationsPlugin.initialize(
@@ -53,7 +53,6 @@ class SpinLinks extends StatelessWidget {
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
       debugShowCheckedModeBanner: false,
-      // theme: ThemeData.dark(),
       routerConfig: AppRouter.router,
     );
   }

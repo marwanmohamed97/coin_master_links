@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../../data/ad_helper.dart';
+import 'ad_for_listView.dart';
 import 'custom_link_widget.dart';
 
 const int maxFailedLoadAttempts = 3;
@@ -22,6 +23,28 @@ class CustomListOfSpins extends StatefulWidget {
 }
 
 class _CustomListOfSpinsState extends State<CustomListOfSpins> {
+  late BannerAd _bottomBannerAd;
+  bool _isBottomBannerAdLoaded = false;
+
+  void _createBottomBannerAd() {
+    _bottomBannerAd = BannerAd(
+      adUnitId: AdHelper.bannerAdUnitId,
+      size: AdSize.banner,
+      request: const AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (_) {
+          setState(() {
+            _isBottomBannerAdLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+        },
+      ),
+    );
+    _bottomBannerAd.load();
+  }
+
   InterstitialAd? _interstitialAd;
   int _interstitialLoadAttempts = 0;
 
@@ -64,6 +87,7 @@ class _CustomListOfSpinsState extends State<CustomListOfSpins> {
   @override
   void initState() {
     super.initState();
+    _createBottomBannerAd();
     _createInterstitialAd();
   }
 
@@ -71,6 +95,7 @@ class _CustomListOfSpinsState extends State<CustomListOfSpins> {
   void dispose() {
     super.dispose();
     _interstitialAd?.dispose();
+    _bottomBannerAd.dispose();
   }
 
   @override
@@ -105,7 +130,14 @@ class _CustomListOfSpinsState extends State<CustomListOfSpins> {
             },
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
-              child: ListView.builder(
+              child: ListView.separated(
+                separatorBuilder: (context, index) {
+                  if ((index + 1) % 4 == 0) {
+                    return const BannerAdmob();
+                  } else {
+                    return Container();
+                  }
+                },
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: lin.length,

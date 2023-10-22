@@ -1,9 +1,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.spin_links">
+    package="com.coin.master.spin.links">
    <application
-        android:label="spin_links"
+        android:label="spin links"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+    
+        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
+             See README(https://goo.gl/l4GJaQ) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_launcher" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorBlue" />
+
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -35,5 +49,8 @@
                 android:name="com.google.android.gms.ads.APPLICATION_ID"
                 android:value="ca-app-pub-6805595132227771~6603638382"
             />
+        
+
+
     </application>
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.spin_links
+package com.coin.master.spin.links
 
 import io.flutter.embedding.android.FlutterActivity
 
