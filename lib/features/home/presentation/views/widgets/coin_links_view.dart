@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'coin_links_view_body.dart';
 
 class CoinLinksView extends StatelessWidget {

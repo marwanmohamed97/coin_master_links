@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-
 import '../../../data/ad_helper.dart';
 import 'custom_list_of_coins.dart';
 

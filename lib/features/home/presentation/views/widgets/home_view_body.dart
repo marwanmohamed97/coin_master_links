@@ -147,8 +147,12 @@ class _HomeviewBodyState extends State<HomeviewBody> {
                   height: 30,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    GoRouter.of(context).push(AppRouter.privacyPolicy);
+                  onTap: () async {
+                    final Uri url = Uri.parse(
+                        'https://spinlinkspolicy.blogspot.com/2023/10/spin-links-privacy-policy.html');
+                    if (!await launchUrl(url)) {
+                      throw Exception('Could not launch $url');
+                    }
                   },
                   child: const PrivacyPolicyView(),
                 ),

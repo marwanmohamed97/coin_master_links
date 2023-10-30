@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-
 import '../../../data/ad_helper.dart';
 
 class BannerAdmob extends StatefulWidget {
@@ -22,7 +21,7 @@ class _BannerAdmobState extends State<BannerAdmob> {
     _bannerAd = BannerAd(
       adUnitId: AdHelper.bannerAdUnitId,
       request: const AdRequest(),
-      size: AdSize.largeBanner,
+      size: AdSize.banner,
       listener: BannerAdListener(
         onAdLoaded: (_) {
           setState(() {
